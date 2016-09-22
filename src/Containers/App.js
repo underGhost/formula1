@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import {observable} from 'mobx';
 
-@observable
 export default class App extends Component {
   render () {
     return (

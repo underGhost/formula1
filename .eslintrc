@@ -27,6 +27,7 @@
 
   "rules": {
     "semi": 2,
+    "no-unused-vars": ["error", { "vars": "all" }],
     "react/display-name": 1,
     "react/forbid-prop-types": 1,
     "react/jsx-boolean-value": 1,
