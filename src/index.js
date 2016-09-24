@@ -1,7 +1,8 @@
-import App from './Containers/App';
+import App from 'containers/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AppStore from './state';
 
 ReactDOM.render(
-	<App/>, document.getElementById('app-root')
+	<App store={AppStore}/>, document.getElementById('root')
 );

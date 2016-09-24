@@ -1,0 +1,12 @@
+section.menu {
+  position: fixed;
+  height: 100%;
+  width: 75%;
+  background: #fff;
+  padding: 10px;
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}

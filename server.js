@@ -6,7 +6,8 @@ var PORT = process.env.PORT || 8000;
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   hot: true,
-  historyApiFallback: true
+  historyApiFallback: true,
+  stats: { colors: true }
 })
 .listen(PORT, 'localhost', function (err) {
   if (err) {

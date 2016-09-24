@@ -1,4 +1,22 @@
 {
-  "presets": ["es2015", "react", "stage-1"],
-  "plugins": ["transform-decorators-legacy"]
+  "plugins": [
+    ["babel-plugin-module-alias",
+      [
+        {
+          "src": "./src/components/",
+          "expose": "components"
+        },
+        {
+          "src": "./src/containers/",
+          "expose": "containers"
+        },
+        {
+          "src": "./src/styles/",
+          "expose": "styles"
+        }
+      ]
+    ],
+    ["transform-decorators-legacy"]
+  ],
+  "presets": [ "react", "es2015", "stage-0" ],
 }

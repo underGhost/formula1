@@ -1,0 +1,21 @@
+header {
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+  overflow: hidden;
+  h1 {
+    margin: 0;
+  }
+  #logo {
+    display: inline-block;
+  }
+  .fa-bars, .fa-search {
+    line-height: 47px;
+  }
+  .fa-bars {
+    float: left;
+  }
+  .fa-search {
+    float: right;
+  }
+}
