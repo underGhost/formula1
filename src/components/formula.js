@@ -16,9 +16,4 @@ export default class Formula extends Component {
 }
 
 Formula.propTypes = {
-
-};
-
-Formula.defaultProps = {
-
 };

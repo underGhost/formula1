@@ -11,18 +11,26 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this);
   }
 
   makeProducts() {
+    const {productsCount, products} = this.props.store;
     const elements = [];
-    for(let i = 0; i < 10; i++) {
-      elements.push(<Formula key={i}/>);
+    for(let i = 0; i < productsCount; i++) {
+      elements.push(<Formula key={i} id={products[i].id}/>);
     }
     return elements;
   }
 
   toggleMenu(){
-    this.props.store.flipMenu();
+    const {flipMenu} = this.props.store;
+    flipMenu();
+  }
+
+  onSearchClick() {
+    const {flipSearch} = this.props.store;
+    flipSearch();
   }
 
   render () {
@@ -30,7 +38,8 @@ export default class App extends Component {
     return (
       <span className="wrapper">
         {store.openMenu ? <Menu toggleMenu={this.toggleMenu}/> : ''}
-        <Header toggleMenu={this.toggleMenu}/>
+        <Header toggleMenu={this.toggleMenu} openSearch={store.openSearch} onSearchClick={this.onSearchClick}/>
+        <span>Total Products: {store.productsCount}</span>
         <div className="container">
           {this.makeProducts()}
         </div>
@@ -42,7 +51,10 @@ export default class App extends Component {
 
 App.propTypes = {
   store: PropTypes.shape({
+    products: PropTypes.object.isRequired,
+    productsCount: PropTypes.number.isRequired,
     flipMenu: PropTypes.func.isRequired,
+    flipSearch: PropTypes.func.isRequired,
     openMenu: PropTypes.bool.isRequired
   })
 };
