@@ -17,7 +17,10 @@ var config = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new HtmlWebpackPlugin({template: './src/index.html' })
+    new HtmlWebpackPlugin({template: './src/index.html' }),
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV'
+    ])
   ],
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -41,11 +44,9 @@ var config = {
 
 if (!PRODUCTION) {
   config.devtool = 'eval';
-  var dev = [
+  config.entry = config.entry.concat([
     'webpack-dev-server/client?http://localhost:' + PORT,
     'webpack/hot/only-dev-server'
-  ];
-  config.entry.concat(dev);
+  ]);
 }
-
 module.exports = config;

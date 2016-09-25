@@ -10,11 +10,3 @@ export default class Footer extends Component {
     );
   }
 }
-
-Footer.propTypes = {
-
-};
-
-Footer.defaultProps = {
-
-};
