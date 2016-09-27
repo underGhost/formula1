@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
 import 'styles/Header.scss';
 
 export default class Header extends Component {
@@ -21,7 +22,7 @@ export default class Header extends Component {
       <header>
         <i className="fa fa-bars" onClick={this.props.toggleMenu}></i>
         <div id="logo">
-          <h1>FormulaShare</h1>
+          <Link to="/"><h1>FormulaShare</h1></Link>
         </div>
         {this.makeSearch()}
       </header>
