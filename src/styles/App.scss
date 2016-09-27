@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Anton|Arapey);
 $fa-font-path: "../../node_modules/font-awesome/fonts";
 @import "../../node_modules/font-awesome/scss/font-awesome";
-html, body {
+html, body, h1, h2, h3, h4, h5, h6, ul {
   margin: 0;
   padding: 0;
 }
@@ -12,6 +12,17 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Anton', sans-serif;
 }
-.container {
-  padding: 10px;
+a {
+  color: #000;
+  text-decoration: none;
+}
+ul {
+  list-style-type: none;
+}
+.button {
+  background: #000;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-transform: uppercase;
 }

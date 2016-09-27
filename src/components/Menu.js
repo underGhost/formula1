@@ -7,7 +7,20 @@ export default class Menu extends Component {
     return (
       <section className="menu">
         <i className="fa fa-close close" onClick={toggleMenu}></i>
-        <a href="https://api.instagram.com/oauth/authorize/?client_id=391741d96c7440aab019e10ce25519f0&redirect_uri=http://formulashare.com:8000&response_type=token">Login</a>
+        <h2>Categories</h2>
+        <ul>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+          <li>Link 1</li>
+        </ul>
       </section>
     );
   }

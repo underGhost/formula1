@@ -41,7 +41,7 @@ if (isDeveloping) {
             }
             return response.json();
         })
-        .then(function(data) {
+        .then((data)  => {
           res.write(JSON.stringify(data));
           res.end();
         });

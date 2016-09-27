@@ -13,6 +13,7 @@ export default class App extends Component {
     super(props);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
+    this.propsToChildren = this.propsToChildren.bind(this);
   }
 
   componentWillMount() {
@@ -20,14 +21,13 @@ export default class App extends Component {
     if(instagramHash) {
       instagramHash = instagramHash.replace('#access_token=', '');
       store.saveAuthToken(instagramHash);
-      this.context.router.replace('/');
+      this.context.router.replace('/formulas');
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.location !== this.props.location && store.authToken) {
       store.fetchMedia();
-      console.log(store);
     }
   }
 
@@ -50,14 +50,29 @@ export default class App extends Component {
     flipSearch();
   }
 
+  onSearchPress(e) {
+    //If escape is hit
+    if(e.keyCode === 27) {
+      const {flipSearch} = store;
+      flipSearch();
+    }
+  }
+
+  propsToChildren() {
+    return React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        store: store
+      });
+    });
+  }
+
   render () {
     return (
       <span className="wrapper">
         {store.openMenu ? <Menu toggleMenu={this.toggleMenu} userLogin={this.userLogin}/> : ''}
-        <Header toggleMenu={this.toggleMenu} openSearch={store.openSearch} onSearchClick={this.onSearchClick}/>
-        <span>Total Products: {store.productsCount}</span>
+        <Header store={store} toggleMenu={this.toggleMenu} openSearch={store.openSearch} onSearchPress={this.onSearchPress} onSearchClick={this.onSearchClick}/>
         <div className="container">
-          {this.props.children}
+          {this.propsToChildren()}
         </div>
         <Footer/>
       </span>

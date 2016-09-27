@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import 'styles/formula.scss';
 
 export default class Formula extends Component {
+  formatCaption() {
+    return this.props.captionText ? this.props.captionText.text : '';
+  }
   render () {
     return (
       <div className="formula">
-        <img src="https://img.buzzfeed.com/buzzfeed-static/static/2015-04/7/11/enhanced/webdr02/enhanced-13471-1428419144-22.png"/>
+        <img src={this.props.image}/>
         <div className="info">
-          <h3>Simple Grey</h3>
-          <p>A great formula to add to your collection.</p>
+          <h3>{this.props.filter}</h3>
+          <p>{this.formatCaption()}</p>
         </div>
       </div>
     );

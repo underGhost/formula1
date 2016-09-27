@@ -1,10 +1,12 @@
 import React, {Component, PropTypes} from 'react';
+import {observer} from 'mobx-react';
 import {Link} from 'react-router';
 import 'styles/Header.scss';
 
+@observer
 export default class Header extends Component {
   makeSearch() {
-    const {openSearch, onSearchClick} = this.props;
+    const {openSearch, onSearchClick, onSearchPress} = this.props;
     if(!openSearch) {
       return (
         <i className="fa fa-search" onClick={onSearchClick}></i>
@@ -12,7 +14,7 @@ export default class Header extends Component {
     } else {
       return (
         <div id="searchWrapper">
-          <input type="text" autoFocus placeholder="Search by color, style, etc" />
+          <input type="text" autoFocus placeholder="Search by color, style, etc" onKeyDown={onSearchPress} />
         </div>
       );
     }
@@ -20,11 +22,11 @@ export default class Header extends Component {
   render () {
     return (
       <header>
-        <i className="fa fa-bars" onClick={this.props.toggleMenu}></i>
+        {this.props.store.authToken ? <i className="fa fa-bars" onClick={this.props.toggleMenu}></i> : ''}
         <div id="logo">
           <Link to="/"><h1>FormulaShare</h1></Link>
         </div>
-        {this.makeSearch()}
+        {this.props.store.authToken ? this.makeSearch() : ''}
       </header>
     );
   }

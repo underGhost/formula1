@@ -1,4 +1,5 @@
 import {observable, computed, autorun} from 'mobx';
+import Promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 class AppStore {
   /*
@@ -14,7 +15,7 @@ class AppStore {
     COMPUTE VALUES
   */
   @computed get productsCount() {
-    return this.products.data ? Object.keys(this.products.data).length : 0;
+    return this.products.data ? this.products.data.length : 0;
   }
 
   /*

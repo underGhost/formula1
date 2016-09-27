@@ -3,11 +3,21 @@ section.menu {
   height: 100%;
   width: 75%;
   background: #fff;
-  padding: 10px;
   z-index: 1;
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+  }
   .close {
     position: absolute;
     right: 10px;
     top: 10px;
+  }
+  li {
+    padding: 10px;
+    border-top: 2px solid #d7d7d7;
+    &:last-child {
+      border-bottom: 2px solid #d7d7d7;
+    }
   }
 }
