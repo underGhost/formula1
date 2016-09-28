@@ -12,6 +12,27 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 8000 : process.env.PORT;
 const app = express();
 
+app.get('/auth', (req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const token = parsedUrl.query.token;
+  const search = parsedUrl.query.term;
+
+  if(token) {
+      const url = search ? 'https://api.instagram.com/v1/tags/'+search+'/media/recent/' : 'https://api.instagram.com/v1/users/self/media/recent/';
+      fetch(url+'?access_token='+token).then((response) => {
+        if (response.status >= 400) {
+            throw new Error("Bad response from Instagram");
+        }
+        return response.json();
+      }).then((data)  => {
+        res.write(JSON.stringify(data));
+        res.end();
+      });
+  } else {
+    res.status(400).send({ error: 'No token supplied' });
+  }
+});
+
 if (isDeveloping) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
@@ -29,28 +50,6 @@ if (isDeveloping) {
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('/auth', (req, res) => {
-    var parsedUrl = url.parse(req.url, true);
-    var token = parsedUrl.query.token;
-
-    if(token) {
-      fetch('https://api.instagram.com/v1/users/self/media/recent/?access_token='+token)
-        .then((response) => {
-            if (response.status >= 400) {
-                throw new Error("Bad response from Instagram");
-            }
-            return response.json();
-        })
-        .then((data)  => {
-          res.write(JSON.stringify(data));
-          res.end();
-        });
-      } else {
-        res.status(400).send({ error: 'No token supplied' });
-      }
-
-
-  });
   app.get('*', (req, res) => {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();

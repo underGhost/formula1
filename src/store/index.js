@@ -1,5 +1,5 @@
-import {observable, computed, autorun} from 'mobx';
-import Promise from 'es6-promise';
+import {observable, computed} from 'mobx';
+import 'es6-promise';
 import fetch from 'isomorphic-fetch';
 class AppStore {
   /*
@@ -51,6 +51,20 @@ class AppStore {
 		this.openMenu = this.openMenu ? false : true;
 	}
 
+  submitSearch(term) {
+    const _this = this;
+    fetch('/auth?term='+term+'&token='+this.authToken)
+      .then((response) => {
+          if (response.status >= 400) {
+              throw new Error("Bad response from server");
+          }
+          return response.json();
+      })
+      .then((data) => {
+        _this.products = data;
+      });
+  }
+
   flipSearch() {
     this.openSearch = this.openSearch ? false : true;
   }
@@ -58,10 +72,8 @@ class AppStore {
   constructor() {
     this.flipMenu = this.flipMenu.bind(this);
     this.flipSearch = this.flipSearch.bind(this);
+    this.submitSearch = this.submitSearch.bind(this);
     this.addProduct = this.addProduct.bind(this);
-    autorun(() => {
-      //this.addProduct();
-    });
   }
 }
 

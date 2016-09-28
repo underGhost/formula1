@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import Formula from 'components/formula';
 import 'styles/formula.scss';
@@ -25,4 +25,8 @@ export default class FormulaList extends Component {
 }
 
 FormulaList.propTypes = {
+  store: PropTypes.shape({
+    products: PropTypes.object.isRequired,
+    productsCount: PropTypes.number.isRequired
+  })
 };

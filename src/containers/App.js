@@ -13,6 +13,7 @@ export default class App extends Component {
     super(props);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
+    this.onSearchPress = this.onSearchPress.bind(this);
     this.propsToChildren = this.propsToChildren.bind(this);
   }
 
@@ -51,9 +52,14 @@ export default class App extends Component {
   }
 
   onSearchPress(e) {
+    const {flipSearch, submitSearch} = store;
+    //If search submitted
+    if(e.keyCode === 13) {
+      submitSearch(e.target.value);
+      this.onSearchClick();
+    }
     //If escape is hit
     if(e.keyCode === 27) {
-      const {flipSearch} = store;
       flipSearch();
     }
   }

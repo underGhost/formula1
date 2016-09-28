@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import 'styles/formula.scss';
 
 export default class Formula extends Component {
@@ -19,4 +19,7 @@ export default class Formula extends Component {
 }
 
 Formula.propTypes = {
+  captionText: PropTypes.object,
+  image: PropTypes.string.isRequired,
+  filter: PropTypes.string.isRequired
 };
