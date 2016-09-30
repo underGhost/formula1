@@ -33,22 +33,23 @@ app.get('/auth', (req, res) => {
   }
 });
 
-if (isDeveloping) {
-  const compiler = webpack(config);
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-    contentBase: path.resolve(__dirname, '../src'),
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  });
+const compiler = webpack(config);
+const middleware = webpackMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  contentBase: path.resolve(__dirname, '../src'),
+  stats: {
+    colors: true,
+    hash: false,
+    timings: true,
+    chunks: false,
+    chunkModules: false,
+    modules: false
+  }
+});
 
-  app.use(middleware);
+app.use(middleware);
+
+if (isDeveloping) {
   app.use(webpackHotMiddleware(compiler));
   app.get('*', (req, res) => {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../dist/index.html')));
@@ -57,7 +58,8 @@ if (isDeveloping) {
 } else {
   app.use(express.static(__dirname + '../dist'));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../dist/index.html')));
+    res.end();
   });
 }
 

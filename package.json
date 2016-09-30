@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Formula 1 website",
   "scripts": {
-    "dist": "webpack",
-    "build": "NODE_ENV=production webpack",
+    "build": "webpack",
+    "build:prod": "NODE_ENV=production webpack",
     "start": "NODE_ENV=dev node server",
+    "start:prod": "NODE_ENV=production node server",
     "clean": "rm -rf ./dist",
     "lint": "eslint src"
   },
@@ -13,14 +14,6 @@
     "type": "git",
     "url": ""
   },
-  "keywords": [
-    "mobservable",
-    "mobx",
-    "react",
-    "reactjs",
-    "boilerplate",
-    "webpack"
-  ],
   "license": "MIT",
   "devDependencies": {
     "babel-core": "6.8.0",
