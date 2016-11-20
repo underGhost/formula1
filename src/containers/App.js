@@ -5,10 +5,12 @@ import Formula from 'components/formula';
 import Menu from 'components/Menu';
 import Footer from 'components/Footer';
 import store from '../store';
-import '../styles/App.scss';
+if(process.env.BROWSER) {
+  require('styles/App.scss');
+}
 
 @observer
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -85,6 +87,8 @@ export default class App extends Component {
     );
   }
 }
+
+export default App;
 
 App.propTypes = {
   location: PropTypes.object.isRequired,

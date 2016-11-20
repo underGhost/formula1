@@ -1,29 +1,23 @@
 var path = require('path');
-var webpack = require('webpack');
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 var isoToolsConfig = require('../server/webpack-isomorphic-config');
 var isomporphicTools = new WebpackIsomorphicToolsPlugin(isoToolsConfig);
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const devConfig = {
+var prodConfig = {
+  devtool: 'eval-source-map',
   entry: [
-    'webpack-hot-middleware/client?reload=true',
     path.join(__dirname, '../src/index')
   ],
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.BROWSER': JSON.stringify(true),
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
-    isomporphicTools.development(),
+    new ExtractTextPlugin('app.[contenthash].css', {allChunks: true}),
+    isomporphicTools
   ],
   module: {
     loaders: [
       {
         test: /\.(js|jsx)$/,
-        loaders: ['react-hot', 'babel'],
+        loader: 'babel',
         exclude: /node_modules/,
         include: [
           path.join(__dirname, '/../src'),
@@ -34,11 +28,7 @@ const devConfig = {
       { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'url?limit=10000!img?progressive=true' },
       {
         test: /\.scss$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap!sass-loader?sourceMap&outputStyle=expanded')
       },
       {
         test: /\.json$/,
@@ -50,4 +40,4 @@ const devConfig = {
   }
 };
 
-module.exports = devConfig;
+module.exports = prodConfig;

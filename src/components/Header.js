@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import {Link} from 'react-router';
-import 'styles/Header.scss';
+if(process.env.BROWSER) {
+  require('styles/Header.scss');
+}
 
 @observer
 export default class Header extends Component {

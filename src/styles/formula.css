@@ -1,0 +1,14 @@
+.formula {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  img {
+    width: 100%;
+  }
+  h3, p {
+    margin: 10px 0;
+  }
+  p {
+    color: #7d7d7d;
+  }
+}
