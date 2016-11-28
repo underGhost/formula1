@@ -1,9 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import Formula from 'components/formula';
-if(process.env.BROWSER) {
-  require('styles/formula.scss');
-}
+import 'styles/formula.scss';
 
 @observer
 export default class FormulaList extends Component {

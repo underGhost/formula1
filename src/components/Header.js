@@ -1,9 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import {Link} from 'react-router';
-if(process.env.BROWSER) {
-  require('styles/Header.scss');
-}
+import 'styles/Header.scss';
 
 @observer
 export default class Header extends Component {
@@ -35,6 +33,8 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
+  onSearchPress: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired,
   toggleMenu: PropTypes.func.isRequired,
   openSearch: PropTypes.bool.isRequired,
   onSearchClick: PropTypes.func.isRequired

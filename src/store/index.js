@@ -1,9 +1,8 @@
-import {observable, computed} from 'mobx';
+import {observable, computed, action} from 'mobx';
 import 'es6-promise';
-import fetch from 'isomorphic-fetch';
-class AppStore {
+class UiState {
   /*
-    STATE VALUES
+   STATE VALUES
   */
 
   @observable openMenu = false;
@@ -12,69 +11,70 @@ class AppStore {
   @observable authToken = null;
 
   /*
-    COMPUTE VALUES
+   COMPUTE VALUES
   */
   @computed get productsCount() {
-    return this.products.data ? this.products.data.length : 0;
+   return this.products.data ? this.products.data.length : 0;
   }
 
   /*
-    ACTIONS
+   ACTIONS
   */
 
   fetchMedia() {
-    var _this = this;
-    fetch('/auth?token='+this.authToken)
-      .then(function(response) {
-          if (response.status >= 400) {
-              throw new Error("Bad response from server");
-          }
-          return response.json();
-      })
-      .then(function(data) {
-        _this.products = data;
-      });
+   var _this = this;
+   fetch('/auth?token='+this.authToken)
+     .then(function(response) {
+         if (response.status >= 400) {
+             throw new Error("Bad response from server");
+         }
+         return response.json();
+     })
+     .then(function(data) {
+       _this.products = data;
+     });
   }
 
   addProduct() {
-    this.products.push({
-      id: Math.random()
-    });
+   this.products.push({
+     id: Math.random()
+   });
   }
 
   saveAuthToken(token) {
-    console.log(token);
-    this.authToken = token;
+   this.authToken = token;
   }
 
-	flipMenu() {
-		this.openMenu = this.openMenu ? false : true;
-	}
+  @action flipMenu() {
+   this.openMenu = this.openMenu ? false : true;
+   return this.openMenu;
+  }
 
   submitSearch(term) {
-    const _this = this;
-    fetch('/auth?term='+term+'&token='+this.authToken)
-      .then((response) => {
-          if (response.status >= 400) {
-              throw new Error("Bad response from server");
-          }
-          return response.json();
-      })
-      .then((data) => {
-        _this.products = data;
-      });
+   const _this = this;
+   fetch('/auth?term='+term+'&token='+this.authToken)
+     .then((response) => {
+         if (response.status >= 400) {
+             throw new Error("Bad response from server");
+         }
+         return response.json();
+     })
+     .then((data) => {
+       _this.products = data;
+     });
   }
 
-  flipSearch() {
-    this.openSearch = this.openSearch ? false : true;
+  @action flipSearch() {
+   this.openSearch = this.openSearch ? false : true;
   }
 
   constructor() {
-    this.flipMenu = this.flipMenu.bind(this);
-    this.flipSearch = this.flipSearch.bind(this);
-    this.submitSearch = this.submitSearch.bind(this);
-    this.addProduct = this.addProduct.bind(this);
+   this.flipMenu = this.flipMenu.bind(this);
+   this.flipSearch = this.flipSearch.bind(this);
+   this.submitSearch = this.submitSearch.bind(this);
+   this.addProduct = this.addProduct.bind(this);
   }
 }
 
-export default new AppStore();
+const singleton = new UiState();
+export default singleton;

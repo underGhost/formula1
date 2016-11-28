@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-if(process.env.BROWSER) {
-  require('styles/Menu.scss');
-}
+import 'styles/Menu.scss';
 
 export default class Menu extends Component {
   render () {

@@ -5,9 +5,8 @@ import Formula from 'components/formula';
 import Menu from 'components/Menu';
 import Footer from 'components/Footer';
 import store from '../store';
-if(process.env.BROWSER) {
-  require('styles/App.scss');
-}
+import 'font-awesome/scss/font-awesome.scss';
+import 'styles/App.scss';
 
 @observer
 class App extends Component {

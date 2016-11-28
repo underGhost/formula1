@@ -1,3 +1,6 @@
+/*eslint no-console: 0*/
+import { toJS } from 'mobx';
+import { Provider } from 'mobx-react';
 import url from 'url';
 import path from 'path';
 import http from 'http';
@@ -7,12 +10,13 @@ import fetch from 'isomorphic-fetch';
 import config from '../webpack.config.js';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import phantom from 'phantom';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToStaticMarkup } from 'react-dom/server';
 import Webpack_isomorphic_tools from 'webpack-isomorphic-tools';
 import routes from '../src/routes';
 import { match, RouterContext } from 'react-router';
+import state from '../src/store';
+import Root from 'containers/Root';
 
 // this global variable will be used later in express middleware
 global.webpack_isomorphic_tools = new Webpack_isomorphic_tools(require('./webpack-isomorphic-config'));
@@ -69,57 +73,29 @@ if (isDeveloping) {
   app.use(express.static(__dirname + '../dist'));
 }
 
-app.get('/scrape/*', (req, res) => {
-  let sitepage = null;
-  let phInstance = null;
-  const http = req.url.match(/https?:\/\//gi) ? '' : 'http://';
-  const website = http + req.url.replace('/scrape/', '');
-  phantom.create()
-    .then(instance => {
-        phInstance = instance;
-        return instance.createPage();
-    })
-    .then(page => {
-        sitepage = page;
-        return page.open(website);
-    })
-    .then(status => {
-        console.log(status);
-        return sitepage.property('content');
-    })
-    .then(content => {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(content);
-        res.end();
-        sitepage.close();
-        phInstance.exit();
-    })
-    .catch(error => {
-        console.log(error);
-        phInstance.exit();
-    });
-});
-
 let responseBodyModifier = html => html;
 
 app.get('*', (req, res) => {
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
    if (error) {
+     //500
      res.status(500).send(error.message);
    } else if (redirectLocation) {
-     console.log('redirect location');
+     //REDIRECT
+     console.log('REDIRECTING', redirectLocation.pathname);
      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
    } else if (renderProps) {
-     // You can also check renderProps.components or renderProps.routes for
-     // your "not found" component or route respectively, and send a 404 as
-     // below, if you're using a catch-all route.
-    res.render('index', { markup: renderToString(<RouterContext {...renderProps} />)}, (err, html) => {
+    //RENDER ON CLIENT
+    const initialStore = toJS(state);
+    const markup = renderToStaticMarkup(<Provider state={state}><Root><RouterContext {...renderProps} /></Root></Provider>);
+    res.render('index', { markup, initialStore: initialStore }, (err, html) => {
       if (err) {
         console.error('Error rendering response: ', err);
       }
       res.send(responseBodyModifier(html));
     });
    } else {
+     //404 Fallback
      res.status(404).send('Not found');
    }
  });

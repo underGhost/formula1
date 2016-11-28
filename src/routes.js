@@ -5,8 +5,8 @@ import Login from 'containers/Login';
 import FormulasList from 'components/formulaList';
 
 export default (
-      <Route path="/" component={App}>
-        <IndexRoute component={Login}/>
-        <Route path="/formulas" component={FormulasList} />
-      </Route>
-  );
+  <Route path="/" component={App}>
+    <IndexRoute component={Login}/>
+    <Route path="/formulas" component={FormulasList} />
+  </Route>
+);

@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-if(process.env.BROWSER) {
-  require('styles/formula.scss');
-}
+import 'styles/formula.scss';
 
 export default class Formula extends Component {
   formatCaption() {

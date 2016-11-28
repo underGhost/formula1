@@ -27,6 +27,7 @@
     "babel-register": "6.8.0",
     "classnames": "2.2.5",
     "css-loader": "^0.23.1",
+    "css-modules-require-hook": "^4.0.5",
     "ejs": "^2.5.2",
     "eslint": "2.10.1",
     "eslint-config-standard": "5.3.1",
@@ -41,8 +42,9 @@
     "html-webpack-plugin": "2.17.0",
     "isomorphic-style-loader": "^1.0.0",
     "json-loader": "^0.5.4",
-    "mobx": "2.1.6",
-    "mobx-react": "3.1.0",
+    "json-stringify-safe": "^5.0.1",
+    "mobx": "2.6.3",
+    "mobx-react": "3.5.3",
     "mobx-react-devtools": "^4.2.6",
     "node-sass": "^3.10.0",
     "react": "15.0.2",
@@ -55,7 +57,7 @@
     "webpack": "1.13.0",
     "webpack-dev-server": "1.14.1",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-isomorphic-tools": "^2.6.3"
+    "webpack-isomorphic-tools": "^2.6.4"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-if(process.env.BROWSER) {
-  require('styles/Footer.scss');
-}
+import 'styles/Footer.scss';
 
 export default class Footer extends Component {
   render () {

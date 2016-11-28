@@ -14,7 +14,6 @@ const devConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.BROWSER': JSON.stringify(true),
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
     isomporphicTools.development(),
@@ -25,10 +24,10 @@ const devConfig = {
         test: /\.(js|jsx)$/,
         loaders: ['react-hot', 'babel'],
         exclude: /node_modules/,
-        include: [
-          path.join(__dirname, '/../src'),
-          path.join(__dirname, '/../cfg'),
-          path.join(__dirname, '/../server')
+        includes: [
+          path.join(__dirname, '../src'),
+          path.join(__dirname, '../cfg'),
+          path.join(__dirname, '../server')
         ]
       },
       { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'url?limit=10000!img?progressive=true' },
@@ -36,8 +35,8 @@ const devConfig = {
         test: /\.scss$/,
         loaders: [
           'style-loader',
-          'css-loader',
-          'sass-loader'
+          'css-loader?localIdentName=[name]__[local]___[hash:base64:5]',
+          'sass-loader?outputStyle=expanded'
         ]
       },
       {
