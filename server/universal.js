@@ -1,6 +1,4 @@
 /*eslint no-console: 0*/
-import { toJS } from 'mobx';
-import { Provider } from 'mobx-react';
 import url from 'url';
 import path from 'path';
 import http from 'http';
@@ -15,8 +13,6 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import Webpack_isomorphic_tools from 'webpack-isomorphic-tools';
 import routes from '../src/routes';
 import { match, RouterContext } from 'react-router';
-import state from '../src/store';
-import Root from 'containers/Root';
 
 // this global variable will be used later in express middleware
 global.webpack_isomorphic_tools = new Webpack_isomorphic_tools(require('./webpack-isomorphic-config'));
@@ -86,9 +82,8 @@ app.get('*', (req, res) => {
      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
    } else if (renderProps) {
     //RENDER ON CLIENT
-    const initialStore = toJS(state);
-    const markup = renderToStaticMarkup(<Provider state={state}><Root><RouterContext {...renderProps} /></Root></Provider>);
-    res.render('index', { markup, initialStore: initialStore }, (err, html) => {
+    const markup = renderToStaticMarkup(<RouterContext {...renderProps} />);
+    res.render('index', { markup }, (err, html) => {
       if (err) {
         console.error('Error rendering response: ', err);
       }
